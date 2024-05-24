@@ -1,0 +1,82 @@
+ 
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id @default(uuid())
+  name String 
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  foundItem FoundItem[]
+  claims Claim[]
+  profile UserProfile?
+
+  @@map("users")
+}
+
+model UserProfile {
+  id String @id @default(uuid())
+  userId String @unique
+  user   User?    @relation(fields: [userId], references: [id]) 
+  bio String
+  age Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("userProfiles")
+}
+
+model FoundItemCategory{
+  id String @id @default(uuid())
+  name String 
+  foundItem FoundItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("foundItemCategories")
+}
+
+model FoundItem{
+  id String @id @default(uuid())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  category FoundItemCategory @relation(fields:[categoryId],references: [id])
+  categoryId String
+  foundItemName String
+  description String
+  location String
+  claims Claim[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("foundItems")
+}
+
+model Claim{
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId],references: [id])
+  foundItemId String
+  foundItem FoundItem @relation(fields: [foundItemId],references: [id])
+  status Status @default(PENDING)
+  distinguishingFeatures String
+  lostDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("claims")
+}
+
+enum Status {
+PENDING
+APPROVED
+REJECTED
+}
