@@ -15,11 +15,11 @@ export function NavLinks() {
     },
     {
       title: "Terms of Use",
-      path: "terms-of-use",
+      path: "/terms-of-use",
     },
     {
       title: "Contact Us",
-      path: "contact-us",
+      path: "/contact-us",
     },
     {
       title: "Found Items",
