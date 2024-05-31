@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { Input } from "./Input";
 import { Label } from "./Label";
 import LabelInputContainer from "./LabelInputContainer";
 import { Controller, useFormContext } from "react-hook-form";
-import { error } from "console";
 import { ClassValue } from "clsx";
+import { TextArea } from "./TextArea";
 
 type TInputProps = {
   name: string;
@@ -12,16 +11,14 @@ type TInputProps = {
   type: string;
   placeholder?: string;
   className?: ClassValue;
-  disabled?: boolean;
 };
 
-const AppInput: FC<TInputProps> = ({
+const AppTExtArea: FC<TInputProps> = ({
   name,
   label,
   type,
   className,
   placeholder,
-  disabled = false,
   ...props
 }) => {
   const { control } = useFormContext();
@@ -34,13 +31,12 @@ const AppInput: FC<TInputProps> = ({
         name={name}
         render={({ field, fieldState: { error } }) => (
           <>
-            <Input
+            <TextArea
               {...field}
               id={name}
               className={`${className} `}
               placeholder={placeholder}
               type={type}
-              disabled={disabled}
               {...props}
             />
             {error && error.message && (
@@ -53,4 +49,4 @@ const AppInput: FC<TInputProps> = ({
   );
 };
 
-export default AppInput;
+export default AppTExtArea;
