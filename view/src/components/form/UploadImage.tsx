@@ -1,10 +1,9 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
+import { Controller, useFormContext, UseFormSetValue } from "react-hook-form";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils/cn";
 import { LuImagePlus } from "react-icons/lu";
-import AppButton from "../ui/AppButton";
 import { BiTrash } from "react-icons/bi";
 import Image from "next/image";
 
@@ -18,21 +17,22 @@ type TUploadImageProps = {
   fieldValue: string;
 };
 
-const UploadImage: FC<TUploadImageProps> = ({
-  fieldName,
-  setValue,
-  className,
-  children,
-  loader,
-  fieldValue,
-}) => {
-  // invoke hooks
-  const cloudName = "dm6yrvvxj";
-  const UploadPreset = "trace-back";
+const UploadImage: FC<TUploadImageProps> = ({ className }) => {
+  // hooks
+  const { control, watch, setValue } = useFormContext();
+
+  // cloudinary variables
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME as string;
+  const UploadPreset = process.env
+    .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET as string;
+
   // local state
   const [image, setImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
   const [isImageUploading, setIsImageUploading] = useState(false);
+
+  // form state
+  const imageUrl = watch("photo");
+  console.log(imageUrl);
 
   useEffect(() => {
     (async () => {
@@ -54,10 +54,7 @@ const UploadImage: FC<TUploadImageProps> = ({
           );
           const data = await response.json();
           if (data.secure_url) {
-            setImageUrl(data.secure_url);
-            if (setValue) {
-              setValue(fieldName, data.secure_url);
-            }
+            setValue("photo", data.secure_url);
           }
         } catch (error) {
           console.error(error);
@@ -66,72 +63,81 @@ const UploadImage: FC<TUploadImageProps> = ({
         }
       }
     })();
-  }, [UploadPreset, cloudName, image, setValue, fieldName]);
-
-  let UploadingButton: ReactNode = null;
-
-  if (children) {
-    if (loader && isImageUploading) {
-      UploadingButton = loader;
-    } else {
-      UploadingButton = children;
-    }
-  } else {
-    UploadingButton = (
-      <label htmlFor={fieldName} className="cursor-pointer">
-        <div
-          className={cn(
-            "mt-2 border-2 border-dashed h-[200px] rounded-md flex items-center justify-center"
-          )}
-        >
-          {isImageUploading ? (
-            <AiOutlineLoading3Quarters className="w-6 h-6 animate-spin duration-500" />
-          ) : imageUrl ? (
-            <Image
-              className="max-h-[180px]"
-              fill
-              alt=""
-              src={imageUrl as string}
-            />
-          ) : (
-            <LuImagePlus className="w-10 h-10 text-gray-500" />
-          )}
-        </div>
-      </label>
-    );
-  }
+  }, [UploadPreset, cloudName, image, setValue]);
 
   return (
-    <div className={cn("relative  w-full", className)}>
-      <input
-        id={fieldName}
-        disabled={isImageUploading}
-        type="file"
-        className="hidden"
-        onChange={(e) => {
-          const selectedFile = e.target.files && e.target.files[0];
-          if (selectedFile) {
-            setImage(selectedFile);
-          }
-        }}
-        accept="image/*"
-      />
+    <Controller
+      control={control}
+      name="photo"
+      render={() => (
+        <div className={cn("  w-full", className)}>
+          <input
+            id="image"
+            disabled={isImageUploading}
+            type="file"
+            className="hidden"
+            onChange={(e) => {
+              const selectedFile = e.target.files && e.target.files[0];
+              if (selectedFile) {
+                setImage(selectedFile);
+              }
+            }}
+            accept="image/*"
+          />
 
-      {UploadingButton}
-
-      <BiTrash
-        className={cn(
-          !imageUrl ? "hidden" : "absolute left-2 top-2 w-4 h-4 cursor-pointer"
-        )}
-        onClick={() => {
-          if (setValue && fieldName) {
-            setValue(fieldName, "");
-          }
-          setImageUrl("");
-        }}
-      />
-    </div>
+          {imageUrl ? (
+            <div className="h-[200px] mb-2 relative">
+              <Image
+                className="w-full h-full object-contain object-left  overflow-hidden"
+                fill
+                alt=""
+                src={imageUrl as string}
+              />
+              <BiTrash
+                className={cn(
+                  !imageUrl
+                    ? "hidden"
+                    : "absolute left-2 top-2 w-4 h-4 cursor-pointer text-red-500"
+                )}
+                onClick={() => {
+                  setValue("photo", "");
+                }}
+              />
+            </div>
+          ) : (
+            <UploadingButton
+              imageUrl={imageUrl}
+              isImageUploading={isImageUploading}
+            />
+          )}
+        </div>
+      )}
+    />
   );
 };
-
 export default UploadImage;
+
+// image uploading button component
+const UploadingButton = ({
+  imageUrl,
+  isImageUploading,
+}: {
+  imageUrl: string;
+  isImageUploading: boolean;
+}) => {
+  return (
+    <label htmlFor="image" className="cursor-pointer">
+      <div
+        className={cn(
+          "mt-2 border-2 border-dashed h-[200px] rounded-md flex items-center justify-center"
+        )}
+      >
+        {isImageUploading ? (
+          <AiOutlineLoading3Quarters className="w-6 h-6 animate-spin duration-500" />
+        ) : (
+          <LuImagePlus className="w-10 h-10 text-gray-500" />
+        )}
+      </div>
+    </label>
+  );
+};

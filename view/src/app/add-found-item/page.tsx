@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addFoundItemValidationSchema } from "@/validationSchemas/item.validation";
 import AppTExtArea from "@/components/form/AppTextArea";
 import UploadImage from "@/components/form/UploadImage";
+import AppDatePicker from "@/components/form/AppDatePicker";
 
 const AddFoundItem = () => {
   const handleAddFoundItem = async (values: FieldValues) => {
@@ -20,7 +21,7 @@ const AddFoundItem = () => {
     itemName: "",
     description: "",
     phoneNumber: "",
-    emailAddress: "",
+    emailAddress: "imrannaaziremon@gmail.com",
     foundDate: "",
     foundAddress: "",
     photo: "",
@@ -38,11 +39,6 @@ const AddFoundItem = () => {
           onSubmit={handleAddFoundItem}
         >
           <div className="space-y-2 mt-4">
-            <UploadImage
-              fieldName="media"
-              setValue={() => {}}
-              fieldValue={""}
-            />
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <AppInput
                 name="itemName"
@@ -64,12 +60,7 @@ const AddFoundItem = () => {
                 label="Found Address"
                 placeholder="Bankra, Jhikorgaca, Jessore."
               />
-              <AppInput
-                name="foundDate"
-                type="date"
-                label="Found Date"
-                placeholder=""
-              />
+              <AppDatePicker name="foundDate" />
             </div>
             <AppTExtArea
               className="h-[200px]"
@@ -93,6 +84,11 @@ const AddFoundItem = () => {
                 placeholder="0149423792"
               />
             </div>
+            <UploadImage
+              fieldName="media"
+              setValue={() => {}}
+              fieldValue={""}
+            />
             <Divider />
             <AppButton>Add found item &rarr;</AppButton>
           </div>
