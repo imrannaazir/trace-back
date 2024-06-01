@@ -3,6 +3,7 @@ import AppButton from "@/components/ui/AppButton";
 import { ImagesSlider } from "@/components/ui/ImageSlider";
 import { TypewriterEffectSmooth } from "@/components/ui/TypewriterEffect";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React from "react";
 
 export function HomPageHero() {
@@ -51,8 +52,12 @@ export function HomPageHero() {
           </p>
           <TypewriterEffectSmooth words={words} />
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 ">
-            <AppButton variant={"outline"}>Report Lost Item</AppButton>
-            <AppButton>Report Found Item</AppButton>
+            <Link href="/add-lost-item">
+              <AppButton variant={"outline"}>Report Lost Item</AppButton>
+            </Link>
+            <Link href="/add-found-item">
+              <AppButton>Report Found Item</AppButton>
+            </Link>
           </div>
         </div>
       </motion.div>

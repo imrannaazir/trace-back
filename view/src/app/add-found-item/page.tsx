@@ -10,6 +10,7 @@ import { addFoundItemValidationSchema } from "@/validationSchemas/item.validatio
 import AppTExtArea from "@/components/form/AppTextArea";
 import UploadImage from "@/components/form/UploadImage";
 import AppDatePicker from "@/components/form/AppDatePicker";
+import AppSelector from "@/components/form/AppSelector";
 
 const AddFoundItem = () => {
   const handleAddFoundItem = async (values: FieldValues) => {
@@ -40,17 +41,12 @@ const AddFoundItem = () => {
         >
           <div className="space-y-2 mt-4">
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+              <AppSelector name="categoryId" label="Category" />
               <AppInput
                 name="itemName"
                 type="text"
                 label="Item name"
                 placeholder="iPhone 15 pro max"
-              />
-              <AppInput
-                name="categoryId"
-                type="text"
-                label="Category"
-                placeholder="Mobile"
               />
             </div>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">

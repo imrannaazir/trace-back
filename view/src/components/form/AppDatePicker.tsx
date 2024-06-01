@@ -1,7 +1,7 @@
+"use client";
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
-import { Button } from "../ui/Button";
 import { cn } from "@/utils/cn";
 import { format } from "date-fns";
 import { LuCalendar } from "react-icons/lu";
@@ -39,11 +39,6 @@ const AppDatePicker: FC<TAppDatePicker> = ({ name, label }) => {
                   placeholder="Pick a date"
                 />
 
-                {/*   {field.value ? (
-                    format(field.value, "PPP")
-                  ) : (
-                  )}
-                </Input> */}
                 <LuCalendar className="absolute  right-4 top-3.5 ml-auto h-4 w-4 opacity-50" />
                 <span
                   className={cn(
@@ -57,7 +52,7 @@ const AppDatePicker: FC<TAppDatePicker> = ({ name, label }) => {
               </div>
             </PopoverTrigger>
             <PopoverContent
-              className="w-auto p-0  bg-gray-50 dark:bg-zinc-950 border-0"
+              className="w-auto p-0  bg-gray-50 dark:bg-zinc-950 "
               align="start"
             >
               <Calendar
