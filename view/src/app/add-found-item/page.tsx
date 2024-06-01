@@ -60,7 +60,7 @@ const AddFoundItem = () => {
                 label="Found Address"
                 placeholder="Bankra, Jhikorgaca, Jessore."
               />
-              <AppDatePicker name="foundDate" />
+              <AppDatePicker name="foundDate" label="Found Date" />
             </div>
             <AppTExtArea
               className="h-[200px]"

@@ -6,41 +6,60 @@ import { cn } from "@/utils/cn";
 import { format } from "date-fns";
 import { LuCalendar } from "react-icons/lu";
 import { Calendar } from "../ui/Calendar";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "./Input";
 
 type TAppDatePicker = {
   name: string;
+  label: string;
 };
 
-const AppDatePicker: FC<TAppDatePicker> = ({ name }) => {
-  const { control } = useFormContext();
+const AppDatePicker: FC<TAppDatePicker> = ({ name, label }) => {
+  const { control, watch } = useFormContext();
+  console.log(watch("foundDate"), "here");
+
   return (
     <Controller
       name={name}
       control={control}
       render={({ field }) => (
-        <div className="flex flex-col">
-          <h3>Date of birth</h3>
+        <div className="flex flex-col w-full">
+          <Label htmlFor={name}>{label}</Label>
           <Popover>
             <PopoverTrigger asChild>
-              <div>
-                <Button
+              <div className="relative cursor-pointer">
+                <Input
                   type="button"
-                  variant={"outline"}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
-                    !field.value && "text-muted-foreground"
+                    "w-full   pl-3 text-left font-normal cursor-pointer",
+                    !field.value &&
+                      "focus:text-neutral-400 dark:focus:text-neutral-600"
                   )}
-                >
-                  {field.value ? (
+                  value={field.value ? format(field.value, "PPP") : undefined}
+                  placeholder="Pick a date"
+                />
+
+                {/*   {field.value ? (
                     format(field.value, "PPP")
                   ) : (
-                    <span>Pick a date</span>
                   )}
-                  <LuCalendar className="ml-auto h-4 w-4 opacity-50" />
-                </Button>
+                </Input> */}
+                <LuCalendar className="absolute  right-4 top-3.5 ml-auto h-4 w-4 opacity-50" />
+                <span
+                  className={cn(
+                    field.value
+                      ? "hidden"
+                      : "absolute left-4 top-3 text-sm text-neutral-400  "
+                  )}
+                >
+                  Pick a date
+                </span>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent
+              className="w-auto p-0  bg-gray-50 dark:bg-zinc-950 border-0"
+              align="start"
+            >
               <Calendar
                 mode="single"
                 selected={field.value}
