@@ -16,34 +16,17 @@ import { cn } from "@/utils/cn";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input } from "./Input";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+export type TLabelValuePair = {
+  value: string;
+  label: string;
+};
 
 type TAppSelector = {
   name: string;
   label: string;
+  options: TLabelValuePair[];
 };
-const AppSelector: React.FC<TAppSelector> = ({ name, label }) => {
+const AppSelector: React.FC<TAppSelector> = ({ name, label, options }) => {
   const [open, setOpen] = React.useState(false);
   const { control, setValue } = useFormContext();
   return (
@@ -55,20 +38,7 @@ const AppSelector: React.FC<TAppSelector> = ({ name, label }) => {
           <label htmlFor={name}>{label}</label>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-              {/* <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[200px] justify-between"
-              >
-                {field?.value
-                  ? frameworks.find(
-                      (framework) => framework.value === field?.value
-                    )?.label
-                  : "Select framework..."}
-                <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button> */}
-              <div className="relative cursor-pointer">
+              <div className="relative cursor-pointer ">
                 <Input
                   type="button"
                   className={cn(
@@ -86,10 +56,9 @@ const AppSelector: React.FC<TAppSelector> = ({ name, label }) => {
                 >
                   <span>
                     {field?.value
-                      ? frameworks.find(
-                          (framework) => framework.value === field?.value
-                        )?.label
-                      : "Select framework..."}
+                      ? options.find((option) => option.value === field?.value)
+                          ?.label
+                      : "Select option..."}
                   </span>
                   <LuChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />{" "}
                 </div>
@@ -97,14 +66,14 @@ const AppSelector: React.FC<TAppSelector> = ({ name, label }) => {
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
               <Command>
-                <CommandInput placeholder="Search framework..." />
-                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandInput placeholder="Search option..." />
+                <CommandEmpty>No option found.</CommandEmpty>
                 <CommandList>
                   <CommandGroup>
-                    {frameworks.map((framework) => (
+                    {options.map((option) => (
                       <CommandItem
-                        key={framework.value}
-                        value={framework.value}
+                        key={option.value}
+                        value={option.value}
                         onSelect={(currentValue) => {
                           setValue(
                             name,
@@ -116,12 +85,12 @@ const AppSelector: React.FC<TAppSelector> = ({ name, label }) => {
                         <LuCheck
                           className={cn(
                             "mr-2 h-4 w-4",
-                            field?.value === framework.value
+                            field?.value === option.value
                               ? "opacity-100"
                               : "opacity-0"
                           )}
                         />
-                        {framework.label}
+                        {option.label}
                       </CommandItem>
                     ))}
                   </CommandGroup>

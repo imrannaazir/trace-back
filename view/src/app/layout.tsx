@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Container from "@/components/ui/Container";
 import Footer from "@/components/navbar/Footer";
 import Divider from "@/components/ui/Divider";
+import Providers from "@/components/providers/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <Container>{children}</Container>
-        <Divider className="my-4" />
-        <Footer />
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={inter.className}>
+          <Navbar />
+          <Container>{children}</Container>
+          <Divider className="my-4" />
+          <Footer />
+        </body>
+      </html>
+    </Providers>
   );
 }
