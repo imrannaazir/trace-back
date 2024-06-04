@@ -10,10 +10,13 @@ import { loginValidationSchema } from "@/validationSchemas/auth.validation";
 import { useLoginMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/redux/features/auth.slice";
 
 const LoginPage = () => {
   // hook
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // api hooks
   const [login] = useLoginMutation();
@@ -25,6 +28,16 @@ const LoginPage = () => {
         toast.success("Logged in successfully.", {
           id: toastId,
         });
+        dispatch(
+          logIn({
+            accessToken: response?.data?.token,
+            user: {
+              id: response?.data?.id,
+              name: response?.data?.name,
+              email: response?.data?.email,
+            },
+          })
+        );
         router.push("/");
       }
     } catch (error) {
@@ -38,8 +51,8 @@ const LoginPage = () => {
   };
 
   const loginFormDefaultValues = {
-    email: "",
-    password: "",
+    email: "imrannaaziremon007@gmail.com",
+    password: "123456",
   };
   return (
     <DotBackgroundSection>
