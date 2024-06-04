@@ -64,7 +64,7 @@ const AppSelector: React.FC<TAppSelector> = ({ name, label, options }) => {
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="w-[200px] p-0 bg-gray-50 dark:bg-zinc-900">
               <Command>
                 <CommandInput placeholder="Search option..." />
                 <CommandEmpty>No option found.</CommandEmpty>

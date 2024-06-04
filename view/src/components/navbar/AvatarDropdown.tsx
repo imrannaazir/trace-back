@@ -1,24 +1,45 @@
+"use client";
 import { useAppSelector } from "@/redux/store";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar";
-import { Button } from "../ui/Button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
-import { selectUser } from "@/redux/features/auth.slice";
+import { logOut, selectUser } from "@/redux/features/auth.slice";
 import Divider from "../ui/Divider";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "../ui/Command";
-import { BiCalendar, BiCreditCard, BiSmile, BiUser } from "react-icons/bi";
-import { LuCalculator, LuLogOut, LuSettings } from "react-icons/lu";
+import { Command, CommandGroup, CommandItem, CommandList } from "../ui/Command";
+import { BiUser } from "react-icons/bi";
+import { LuLogOut } from "react-icons/lu";
+import { useAppDispatch } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const AvatarDropdown = () => {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  // handle logout
+  const handleLogout = () => {
+    dispatch(logOut());
+    toast.info("User logged out", { duration: 3000 });
+  };
+
+  // handle redirect to profile page
+  const handleRedirectToProfile = () => {
+    router.push("/my-profile");
+  };
+
+  const commandList = [
+    {
+      title: "Profile",
+      icon: <BiUser className="mr-2 h-4 w-4" />,
+      onClick: handleRedirectToProfile,
+    },
+    {
+      title: "Logout",
+      icon: <LuLogOut className="mr-2 h-4 w-4" />,
+      onClick: handleLogout,
+    },
+  ];
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -40,14 +61,18 @@ const AvatarDropdown = () => {
             <Command className="rounded-lg   ">
               <CommandList>
                 <CommandGroup>
-                  <CommandItem className="hover:dark:bg-zinc-700">
-                    <BiUser className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </CommandItem>
-                  <CommandItem className="hover:dark:bg-zinc-700">
-                    <LuLogOut className="mr-2 h-4 w-4" />
-                    <span>Logout</span>
-                  </CommandItem>
+                  {commandList?.map((command, i) => (
+                    <div
+                      key={i}
+                      className="w-full cursor-pointer"
+                      onClick={command.onClick}
+                    >
+                      <CommandItem className="hover:dark:bg-zinc-700">
+                        {command.icon}
+                        <span>{command.title}</span>
+                      </CommandItem>
+                    </div>
+                  ))}
                 </CommandGroup>
               </CommandList>
             </Command>

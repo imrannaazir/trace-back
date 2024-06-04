@@ -17,6 +17,18 @@ const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers }) => {
+    const authValue = localStorage.getItem("persist:auth");
+    let accessToken;
+    if (authValue) {
+      accessToken = JSON.parse(authValue).accessToken;
+    }
+
+    if (accessToken) {
+      headers = {
+        ...headers,
+        Authorization: accessToken,
+      };
+    }
     try {
       const result = await axios({
         url: baseUrl + url,

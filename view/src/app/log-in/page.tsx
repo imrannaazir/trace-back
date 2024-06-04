@@ -10,13 +10,13 @@ import { loginValidationSchema } from "@/validationSchemas/auth.validation";
 import { useLoginMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
 import { logIn } from "@/redux/features/auth.slice";
+import { useAppDispatch } from "@/redux/hooks";
 
 const LoginPage = () => {
   // hook
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // api hooks
   const [login] = useLoginMutation();
@@ -38,7 +38,7 @@ const LoginPage = () => {
             },
           })
         );
-        router.push("/");
+        router.back();
       }
     } catch (error) {
       toast.error(

@@ -16,7 +16,21 @@ const createFoundItemCategory = catchAsync(async (req, res) => {
   });
 });
 
+// get all found item categories
+const getCategoryList = catchAsync(async (req, res) => {
+  console.log(req.headers.authorization);
+
+  const result = await FoundItemCategoryServices.getCategoryList();
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "All categories retrieved successfully.",
+    data: result,
+  });
+});
+
 const FoundItemCategoryControllers = {
   createFoundItemCategory,
+  getCategoryList,
 };
 export default FoundItemCategoryControllers;

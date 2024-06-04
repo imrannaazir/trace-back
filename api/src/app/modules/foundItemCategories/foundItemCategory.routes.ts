@@ -14,5 +14,8 @@ router.post(
   FoundItemCategoryControllers.createFoundItemCategory,
 );
 
+// retrieved all categories : GET
+router.get("/get-all", FoundItemCategoryControllers.getCategoryList);
+
 const FoundItemCategoryRoutes = router;
 export default FoundItemCategoryRoutes;

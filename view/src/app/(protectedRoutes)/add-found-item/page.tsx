@@ -11,8 +11,15 @@ import AppTExtArea from "@/components/form/AppTextArea";
 import UploadImage from "@/components/form/UploadImage";
 import AppDatePicker from "@/components/form/AppDatePicker";
 import AppSelector from "@/components/form/AppSelector";
+import { useGetCategoryListQuery } from "@/redux/api/category.api";
+import { TCategoryProps } from "@/types/category.types";
 
 const AddFoundItem = () => {
+  // api hooks
+  const { data: categoriesData, isFetching } =
+    useGetCategoryListQuery(undefined);
+  console.log({ categoriesData });
+
   const handleAddFoundItem = async (values: FieldValues) => {
     console.log(values);
   };
@@ -28,28 +35,11 @@ const AddFoundItem = () => {
     photo: "",
   };
 
-  const categoryOptions = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
+  const categoryOptions =
+    categoriesData?.data?.map((category: TCategoryProps) => ({
+      label: category?.name,
+      value: category?.id,
+    })) || [];
   return (
     <DotBackgroundSection>
       <div className="max-w-screen-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  ">
