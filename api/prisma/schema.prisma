@@ -53,6 +53,10 @@ model FoundItem{
   foundItemName String
   description String
   location String
+  photo String?
+  phoneNumber String
+  foundDate DateTime
+  emailAddress String
   claims Claim[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

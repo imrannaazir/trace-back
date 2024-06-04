@@ -13,25 +13,47 @@ import AppDatePicker from "@/components/form/AppDatePicker";
 import AppSelector from "@/components/form/AppSelector";
 import { useGetCategoryListQuery } from "@/redux/api/category.api";
 import { TCategoryProps } from "@/types/category.types";
+import { toast } from "sonner";
+import { useCreateFoundItemMutation } from "@/redux/api/foundItem.api";
 
 const AddFoundItem = () => {
   // api hooks
+  const [createFoundItem] = useCreateFoundItemMutation();
   const { data: categoriesData, isFetching } =
     useGetCategoryListQuery(undefined);
+
   console.log({ categoriesData });
 
   const handleAddFoundItem = async (values: FieldValues) => {
-    console.log(values);
+    const toastId = toast.loading("Adding new found item...");
+    try {
+      const response = await createFoundItem(values).unwrap();
+      console.log({ response });
+      if (response?.success) {
+        toast.success("New found item added successfully.", {
+          id: toastId,
+        });
+      }
+    } catch (error) {
+      console.log({ error });
+
+      toast.error(
+        error?.data?.errorDetails?.issues?.[0]?.message ||
+          error?.data?.errorDetails ||
+          "Something went wrong!",
+        { id: toastId }
+      );
+    }
   };
 
   const defaultValues = {
     categoryId: "",
-    itemName: "",
+    foundItemName: "",
     description: "",
     phoneNumber: "",
     emailAddress: "imrannaaziremon@gmail.com",
     foundDate: "",
-    foundAddress: "",
+    location: "",
     photo: "",
   };
 
@@ -60,7 +82,7 @@ const AddFoundItem = () => {
                 options={categoryOptions}
               />
               <AppInput
-                name="itemName"
+                name="foundItemName"
                 type="text"
                 label="Item name"
                 placeholder="iPhone 15 pro max"
@@ -68,7 +90,7 @@ const AddFoundItem = () => {
             </div>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <AppInput
-                name="foundLocation"
+                name="location"
                 type="text"
                 label="Found Address"
                 placeholder="Bankra, Jhikorgaca, Jessore."
@@ -98,7 +120,7 @@ const AddFoundItem = () => {
               />
             </div>
             <UploadImage
-              fieldName="media"
+              fieldName="photo"
               setValue={() => {}}
               fieldValue={""}
             />

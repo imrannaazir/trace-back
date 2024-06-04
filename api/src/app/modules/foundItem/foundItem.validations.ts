@@ -6,5 +6,9 @@ export const createFoundItemValidationSchema = z.object({
     foundItemName: z.string(),
     description: z.string(),
     location: z.string(),
+    phoneNumber: z.string(),
+    emailAddress: z.string().email(),
+    foundDate: z.coerce.date(),
+    photo: z.string().optional(),
   }),
 });

@@ -21,7 +21,9 @@ const axiosBaseQuery =
     let accessToken;
     if (authValue) {
       accessToken = JSON.parse(authValue).accessToken;
+      accessToken = accessToken.replace(/"/g, "");
     }
+    console.log(accessToken);
 
     if (accessToken) {
       headers = {
