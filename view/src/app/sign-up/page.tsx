@@ -9,8 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerValidationSchema } from "@/validationSchemas/auth.validation";
 import { useRegisterMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
+import { redirect, useRouter } from "next/navigation";
 
 const SignUpPage = () => {
+  const router = useRouter();
   //  api hook
   const [register] = useRegisterMutation();
 
@@ -21,12 +23,23 @@ const SignUpPage = () => {
       password: values?.password,
     };
 
-    toast.loading("Registering...", { duration: 3000 });
+    const toastId = toast.loading("Registering...", { duration: 3000 });
     try {
-      const response = await register(payload);
-      console.log(response);
+      const response = await register(payload).unwrap();
+      console.log({ response });
+      if (response?.success) {
+        toast.success("Registered successfully, please login.", {
+          id: toastId,
+        });
+        router.push("/log-in");
+      }
     } catch (error) {
-      console.log(error);
+      console.log({ error });
+      toast.error(
+        error?.data?.errorDetails?.issues?.[0]?.message ||
+          "Something went wrong!",
+        { id: toastId }
+      );
     }
   };
   return (
