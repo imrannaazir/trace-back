@@ -1,8 +1,7 @@
-import Link from "next/link";
-import AppButton from "../ui/AppButton";
 import Container from "../ui/Container";
 import Divider from "../ui/Divider";
 import { NavLinks } from "./NavLinks";
+import NavbarEnd from "./NavbarEnd";
 
 const Navbar = () => {
   return (
@@ -14,14 +13,7 @@ const Navbar = () => {
 
           <NavLinks />
           {/* end*/}
-          <div className="flex gap-2">
-            <Link href={"/sign-up"}>
-              <AppButton variant={"outline"}>Signup</AppButton>
-            </Link>
-            <Link href={"/log-in"}>
-              <AppButton>Login</AppButton>
-            </Link>
-          </div>
+          <NavbarEnd />
         </Container>
       </main>
     </div>
