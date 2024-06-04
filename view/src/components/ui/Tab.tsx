@@ -58,8 +58,6 @@ export const Tabs = ({
         )}
       >
         {propTabs.map((tab, idx) => {
-          active.path === tab.path && console.log({ active, tab });
-
           return (
             <button
               key={tab.title}

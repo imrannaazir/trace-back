@@ -20,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={inter.className}>
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>
           <Navbar />
           <Container>{children}</Container>
           <Divider className="my-4" />
           <Footer />
-        </body>
-      </html>
-    </Providers>
+        </Providers>
+      </body>
+    </html>
   );
 }

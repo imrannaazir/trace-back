@@ -11,7 +11,7 @@ import config from "../../config";
 const register = async (
   user: User,
   profile: UserProfile,
-): Promise<UserProfile> => {
+): Promise<UserProfile | string> => {
   const result = await prisma.$transaction(async (transactionClient) => {
     user.password = (await hashPassword(user.password)) as string;
     // create new user
@@ -22,24 +22,28 @@ const register = async (
       },
     });
 
-    // create profile for user
-    const createdProfileData = await transactionClient.userProfile.create({
-      data: {
-        ...profile,
-        userId: newUser.id,
-      },
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true,
-            id: true,
+    if (profile) {
+      // create profile for user
+      const createdProfileData = await transactionClient.userProfile.create({
+        data: {
+          ...profile,
+          userId: newUser.id,
+        },
+        include: {
+          user: {
+            select: {
+              name: true,
+              email: true,
+              id: true,
+            },
           },
         },
-      },
-    });
+      });
 
-    return createdProfileData;
+      return createdProfileData;
+    } else {
+      return "Registered successfully.";
+    }
   });
 
   return result;

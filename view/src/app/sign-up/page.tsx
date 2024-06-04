@@ -7,16 +7,33 @@ import AppInput from "@/components/form/AppInput";
 import Divider from "@/components/ui/Divider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerValidationSchema } from "@/validationSchemas/auth.validation";
+import { useRegisterMutation } from "@/redux/api/auth.api";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
+  //  api hook
+  const [register] = useRegisterMutation();
+
   const handleRegister = async (values: FieldValues) => {
-    console.log(values);
+    const payload = {
+      name: `${values?.firstName} ${values.lastName}`,
+      email: values?.email,
+      password: values?.password,
+    };
+
+    toast.loading("Registering...", { duration: 3000 });
+    try {
+      const response = await register(payload);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <DotBackgroundSection>
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  ">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-          Welcome to Aceternity
+          Welcome to Trace Back
         </h2>
 
         <AppForm

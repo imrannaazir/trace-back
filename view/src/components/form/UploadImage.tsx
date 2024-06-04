@@ -32,7 +32,6 @@ const UploadImage: FC<TUploadImageProps> = ({ className }) => {
 
   // form state
   const imageUrl = watch("photo");
-  console.log(imageUrl);
 
   useEffect(() => {
     (async () => {

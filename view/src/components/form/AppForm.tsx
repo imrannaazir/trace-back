@@ -35,13 +35,9 @@ const AppForm: FC<TFormProps> = ({
 
   // submit handler
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log({ data });
-
     onSubmit(data);
-    reset();
+    // reset();
   };
-
-  console.log(methods.watch("firstName"));
 
   return (
     <FormProvider {...methods}>

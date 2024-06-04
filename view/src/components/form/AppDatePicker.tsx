@@ -16,7 +16,6 @@ type TAppDatePicker = {
 
 const AppDatePicker: FC<TAppDatePicker> = ({ name, label }) => {
   const { control, watch } = useFormContext();
-  console.log(watch("foundDate"), "here");
 
   return (
     <Controller
