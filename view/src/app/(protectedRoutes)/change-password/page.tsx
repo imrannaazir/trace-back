@@ -6,11 +6,8 @@ import AppForm from "@/components/form/AppForm";
 import AppInput from "@/components/form/AppInput";
 import Divider from "@/components/ui/Divider";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  changePasswordValidationSchema,
-  loginValidationSchema,
-} from "@/validationSchemas/auth.validation";
-import { useLoginMutation } from "@/redux/api/auth.api";
+import { changePasswordValidationSchema } from "@/validationSchemas/auth.validation";
+import { useChangePasswordMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -19,28 +16,18 @@ import { logIn } from "@/redux/features/auth.slice";
 const ChangePasswordPage = () => {
   // hook
   const router = useRouter();
-  const dispatch = useDispatch();
 
   // api hooks
-  const [login] = useLoginMutation();
+  const [changePassword] = useChangePasswordMutation();
   const handleChangePassword = async (values: FieldValues) => {
-    const toastId = toast.loading("Logging in...", { duration: 3000 });
+    const toastId = toast.loading("Changing password...", { duration: 3000 });
     try {
-      const response = await login(values).unwrap();
+      const response = await changePassword(values).unwrap();
       if (response?.success) {
-        toast.success("Logged in successfully.", {
+        toast.success("Password changed.", {
           id: toastId,
         });
-        dispatch(
-          logIn({
-            accessToken: response?.data?.token,
-            user: {
-              id: response?.data?.id,
-              name: response?.data?.name,
-              email: response?.data?.email,
-            },
-          })
-        );
+
         router.push("/");
       }
     } catch (error) {
@@ -54,9 +41,9 @@ const ChangePasswordPage = () => {
   };
 
   const changePasswordFormDefaultValues = {
-    current_password: "",
-    new_password: "",
-    confirm_password: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   };
   return (
     <DotBackgroundSection>
@@ -73,19 +60,19 @@ const ChangePasswordPage = () => {
           >
             <div className="space-y-2 mt-4">
               <AppInput
-                name="current_password"
+                name="currentPassword"
                 type="password"
                 label="Current password"
                 placeholder="••••••••"
               />
               <AppInput
-                name="new_password"
+                name="newPassword"
                 type="password"
                 label="New password"
                 placeholder="••••••••"
               />
               <AppInput
-                name="confirm_password"
+                name="confirmPassword"
                 type="password"
                 label="Confirm password"
                 placeholder="••••••••"

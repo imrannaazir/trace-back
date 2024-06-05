@@ -6,7 +6,7 @@ import { logOut, selectUser } from "@/redux/features/auth.slice";
 import Divider from "../ui/Divider";
 import { Command, CommandGroup, CommandItem, CommandList } from "../ui/Command";
 import { BiUser } from "react-icons/bi";
-import { LuLogOut } from "react-icons/lu";
+import { LuKey, LuLogOut } from "react-icons/lu";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -26,12 +26,21 @@ const AvatarDropdown = () => {
   const handleRedirectToProfile = () => {
     router.push("/my-profile");
   };
+  // handle redirect to change password page
+  const handleRedirectToChangePassword = () => {
+    router.push("/change-password");
+  };
 
   const commandList = [
     {
       title: "My Profile",
       icon: <BiUser className="mr-2 h-4 w-4" />,
       onClick: handleRedirectToProfile,
+    },
+    {
+      title: "Change Password",
+      icon: <LuKey className="mr-2 h-4 w-4" />,
+      onClick: handleRedirectToChangePassword,
     },
     {
       title: "Logout",

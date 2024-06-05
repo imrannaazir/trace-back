@@ -28,12 +28,12 @@ export const loginValidationSchema = z.object({
 
 // change password validation schema
 export const changePasswordValidationSchema = z.object({
-  current_password: z.string().nonempty("Current password is required"),
-  new_password: z
+  currentPassword: z.string().nonempty("Current password is required"),
+  newPassword: z
     .string()
     .nonempty("New password is required")
     .min(6, { message: "Password must be at least 6 characters" }),
-  confirm_password: z
+  confirmPassword: z
     .string()
     .nonempty("Confirm password is required")
     .min(6, { message: "Password must be at least 6 characters" }),

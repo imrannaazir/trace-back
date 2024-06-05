@@ -84,9 +84,43 @@ const login = async (payload: TLoginPayload): Promise<TLoginReturn> => {
   return result;
 };
 
+// change password
+const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  userId: string,
+) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+  // check is password valid
+  const isPasswordMatched = await comparePassword(
+    user.password,
+    currentPassword,
+  );
+  if (!isPasswordMatched) {
+    throw new AppError(StatusCodes.UNAUTHORIZED, "Password does not matched.");
+  }
+
+  // hash password
+  const newHashedPassword = await hashPassword(newPassword);
+
+  const updatedUser = await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      password: newHashedPassword,
+    },
+  });
+
+  return updatedUser;
+};
+
 const AuthServices = {
   login,
   register,
+  changePassword,
 };
 
 export default AuthServices;

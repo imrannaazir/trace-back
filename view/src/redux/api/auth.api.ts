@@ -1,3 +1,4 @@
+import { BiUnderline } from "react-icons/bi";
 import baseApi from "./baseApi";
 
 const authApi = baseApi.injectEndpoints({
@@ -19,7 +20,20 @@ const authApi = baseApi.injectEndpoints({
         data: data,
       }),
     }),
+
+    //change password
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/change-password",
+        method: "PUT",
+        data: data,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useChangePasswordMutation,
+} = authApi;
