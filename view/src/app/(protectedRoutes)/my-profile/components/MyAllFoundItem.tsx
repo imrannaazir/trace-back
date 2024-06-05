@@ -28,6 +28,8 @@ export default function MyAllFoundItems() {
               photo={item?.photo}
               title={item?.foundItemName}
               type="found"
+              redirectPath="/my-profile/found-item/"
+              id={item?.id}
             />
           ))}
         </div>

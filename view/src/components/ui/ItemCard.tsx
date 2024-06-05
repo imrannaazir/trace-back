@@ -4,12 +4,15 @@ import AppButton from "./AppButton";
 import { FC } from "react";
 import { BiImage } from "react-icons/bi";
 import { FaClock } from "react-icons/fa";
+import Link from "next/link";
 type TItemCardProps = {
   photo: string;
   description: string;
   title: string;
   type: "lost" | "found" | "claim";
   date: string;
+  redirectPath: string;
+  id: string;
 };
 const ItemCard: FC<TItemCardProps> = ({
   photo,
@@ -17,6 +20,8 @@ const ItemCard: FC<TItemCardProps> = ({
   description,
   type,
   date,
+  redirectPath,
+  id,
 }) => {
   return (
     <div className=" dark:bg-black bg-white max-w-96  rounded-3xl p-4 shadow-xl border border-neutral-200 dark:border-white/[0.1]  hover:shadow-black/[0.1] hover:dark:shadow-white/[0.05] flex flex-col justify-between">
@@ -51,7 +56,9 @@ const ItemCard: FC<TItemCardProps> = ({
             <FaClock />
             {type} at: <span>10:22 pm</span>
           </p>
-          <AppButton className="max-w-[100px]">View</AppButton>
+          <Link href={`${redirectPath}/${id}`}>
+            <AppButton className="max-w-[100px]">View</AppButton>
+          </Link>
         </div>
       </div>
     </div>

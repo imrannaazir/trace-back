@@ -20,5 +20,7 @@ router.get("/", FoundItemControllers.getAllFoundItems);
 // my all found items : GET
 router.get("/my", auth(), FoundItemControllers.getAllMyFoundItems);
 
+// get single found item : GET
+router.get("/:foundItemId", FoundItemControllers.getSingleFoundItem);
 const FoundItemRoutes = router;
 export default FoundItemRoutes;

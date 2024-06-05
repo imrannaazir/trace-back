@@ -47,10 +47,23 @@ const getAllMyFoundItems = catchAsync(async (req, res) => {
   });
 });
 
+// get single found item
+
+const getSingleFoundItem = catchAsync(async (req, res) => {
+  const foundItemId = req.params.foundItemId;
+  const result = await FoundItemServices.getSingleFoundItem(foundItemId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: `Found item retrieved successfully.`,
+    data: result,
+  });
+});
 const FoundItemControllers = {
   createFoundItem,
   getAllFoundItems,
   getAllMyFoundItems,
+  getSingleFoundItem,
 };
 
 export default FoundItemControllers;

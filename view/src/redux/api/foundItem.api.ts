@@ -18,8 +18,19 @@ const foundItemApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    // get single found item
+    getSingleFoundItem: builder.query({
+      query: (foundItemId: string) => ({
+        url: `/found-items/${foundItemId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateFoundItemMutation, useGetAllMyFoundItemQuery } =
-  foundItemApi;
+export const {
+  useCreateFoundItemMutation,
+  useGetAllMyFoundItemQuery,
+  useGetSingleFoundItemQuery,
+} = foundItemApi;

@@ -10,7 +10,7 @@ const Navbar = () => {
       <main className="  py-3 relative ">
         <Divider className="absolute bottom-0" />
         <Container className="flex justify-between items-center">
-          <AppLogo />
+          <AppLogo className="text-xl" />
 
           <NavLinks />
           {/* end*/}

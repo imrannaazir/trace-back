@@ -30,6 +30,8 @@ export type TFoundItemProps = {
   phoneNumber: string;
   foundDate: string;
   emailAddress: string;
+  category: TCategoryProps;
+  user: TUserProps;
   createdAt: string;
   updatedAt: string;
 };

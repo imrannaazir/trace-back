@@ -117,10 +117,35 @@ const getAllMyFoundItems = async (userId: string): Promise<FoundItem[]> => {
   return result;
 };
 
+// get single found item
+const getSingleFoundItem = async (foundItemId: string): Promise<FoundItem> => {
+  const result = await prisma.foundItem.findUniqueOrThrow({
+    where: {
+      id: foundItemId,
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+          profile: true,
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
 const FoundItemServices = {
   createFoundItem,
   getAllFoundItems,
   getAllMyFoundItems,
+  getSingleFoundItem,
 };
 
 export default FoundItemServices;
