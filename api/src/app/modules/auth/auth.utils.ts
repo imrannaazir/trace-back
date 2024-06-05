@@ -37,6 +37,10 @@ export const createToken = (
 };
 
 // verify token
-export const verifyToken = (token: string, secret: Secret) => {
-  return jwt.verify(token, secret);
+export const verifyToken = async (token: string, secret: Secret) => {
+  try {
+    return await jwt.verify(token, secret);
+  } catch (error) {
+    throw new AppError(StatusCodes.UNAUTHORIZED, "Your are unauthorized.");
+  }
 };

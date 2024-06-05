@@ -22,21 +22,16 @@ const AddFoundItem = () => {
   const { data: categoriesData, isFetching } =
     useGetCategoryListQuery(undefined);
 
-  console.log({ categoriesData });
-
   const handleAddFoundItem = async (values: FieldValues) => {
     const toastId = toast.loading("Adding new found item...");
     try {
       const response = await createFoundItem(values).unwrap();
-      console.log({ response });
       if (response?.success) {
         toast.success("New found item added successfully.", {
           id: toastId,
         });
       }
     } catch (error) {
-      console.log({ error });
-
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||

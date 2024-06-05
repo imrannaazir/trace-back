@@ -15,10 +15,10 @@ const auth = () => {
       }
 
       // verify token
-      const verifiedUser = verifyToken(
+      const verifiedUser = (await verifyToken(
         token,
         config.jwt.secret as Secret,
-      ) as JwtPayload;
+      )) as JwtPayload;
       if (!verifiedUser) {
         throw new AppError(StatusCodes.UNAUTHORIZED, "Invalid token.");
       }

@@ -10,13 +10,15 @@ import { loginValidationSchema } from "@/validationSchemas/auth.validation";
 import { useLoginMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { logIn } from "@/redux/features/auth.slice";
+import { logIn, selectToken } from "@/redux/features/auth.slice";
 import { useAppDispatch } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/store";
 
 const LoginPage = () => {
   // hook
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const accessToken = useAppSelector(selectToken);
 
   // api hooks
   const [login] = useLoginMutation();
@@ -54,6 +56,11 @@ const LoginPage = () => {
     email: "imrannaaziremon007@gmail.com",
     password: "123456",
   };
+
+  if (accessToken) {
+    router.back();
+    return null;
+  }
   return (
     <DotBackgroundSection>
       <div className="flex justify-center items-center min-h-[calc(100vh-285px)]">

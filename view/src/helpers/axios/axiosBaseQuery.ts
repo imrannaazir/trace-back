@@ -1,3 +1,5 @@
+import { logOut } from "@/redux/features/auth.slice";
+import { store } from "@/redux/store";
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import axios from "axios";
 import type { AxiosRequestConfig, AxiosError } from "axios";
@@ -17,14 +19,7 @@ const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers }) => {
-    const authValue = localStorage.getItem("persist:auth");
-    let accessToken;
-    if (authValue) {
-      accessToken = JSON.parse(authValue).accessToken;
-      accessToken = accessToken.replace(/"/g, "");
-    }
-    console.log(accessToken);
-
+    const accessToken = store.getState().auth.accessToken;
     if (accessToken) {
       headers = {
         ...headers,
@@ -39,9 +34,13 @@ const axiosBaseQuery =
         params,
         headers,
       });
+
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
+      if (err?.response?.status === 401) {
+        store.dispatch(logOut());
+      }
       return {
         error: {
           status: err.response?.status,
