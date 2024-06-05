@@ -29,6 +29,18 @@ const getAllClaims = catchAsync(async (req, res) => {
   });
 });
 
+// get all my claims
+const getMyAllClaims = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const result = await ClaimServices.getMyAllClaims(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "All my claims retrieved successfully.",
+    data: result,
+  });
+});
+
 // update claim status
 const updateClaimStatus = catchAsync(async (req, res) => {
   const payload = req.body;
@@ -46,6 +58,7 @@ const ClaimControllers = {
   createClaim,
   getAllClaims,
   updateClaimStatus,
+  getMyAllClaims,
 };
 
 export default ClaimControllers;

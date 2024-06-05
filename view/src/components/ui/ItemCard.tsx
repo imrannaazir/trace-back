@@ -8,7 +8,7 @@ type TItemCardProps = {
   photo: string;
   description: string;
   title: string;
-  type: "lost" | "found";
+  type: "lost" | "found" | "claim";
   date: string;
 };
 const ItemCard: FC<TItemCardProps> = ({

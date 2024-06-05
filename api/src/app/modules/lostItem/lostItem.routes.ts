@@ -14,8 +14,11 @@ router.post(
   LostItemControllers.createLostItem,
 );
 
-// get many lost items : GET
+// get  lost items : GET
 router.get("/", LostItemControllers.getAllLostItems);
+
+// get my all lost items : GET
+router.get("/my", auth(), LostItemControllers.getAllMyLostItems);
 
 const LostItemRoutes = router;
 export default LostItemRoutes;

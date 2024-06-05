@@ -106,9 +106,21 @@ const getAllFoundItems = async (
   return { result, meta };
 };
 
+// get all my found items
+const getAllMyFoundItems = async (userId: string): Promise<FoundItem[]> => {
+  const result = await prisma.foundItem.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  return result;
+};
+
 const FoundItemServices = {
   createFoundItem,
   getAllFoundItems,
+  getAllMyFoundItems,
 };
 
 export default FoundItemServices;

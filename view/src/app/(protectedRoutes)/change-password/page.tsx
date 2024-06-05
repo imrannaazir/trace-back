@@ -10,8 +10,6 @@ import { changePasswordValidationSchema } from "@/validationSchemas/auth.validat
 import { useChangePasswordMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/redux/features/auth.slice";
 
 const ChangePasswordPage = () => {
   // hook

@@ -35,9 +35,22 @@ const getAllFoundItems = catchAsync(async (req, res) => {
   });
 });
 
+// get all my found items
+const getAllMyFoundItems = catchAsync(async (req, res) => {
+  const userId = req?.user?.id;
+  const result = await FoundItemServices.getAllMyFoundItems(userId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: `My Found items retrieved successfully.`,
+    data: result,
+  });
+});
+
 const FoundItemControllers = {
   createFoundItem,
   getAllFoundItems,
+  getAllMyFoundItems,
 };
 
 export default FoundItemControllers;

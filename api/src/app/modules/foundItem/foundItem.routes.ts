@@ -17,5 +17,8 @@ router.post(
 // get many found items : GET
 router.get("/", FoundItemControllers.getAllFoundItems);
 
+// my all found items : GET
+router.get("/my", auth(), FoundItemControllers.getAllMyFoundItems);
+
 const FoundItemRoutes = router;
 export default FoundItemRoutes;

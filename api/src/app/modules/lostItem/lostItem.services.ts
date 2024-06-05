@@ -4,7 +4,7 @@ import { TMeta } from "../../types/global.types";
 import calculatePagination from "../../utils/calculatePagination";
 import { lostItemsSearchableFields } from "./lostItem.constant";
 
-// create found item
+// create lost item
 const createLostItem = async (
   payload: LostItem,
   userId: string,
@@ -37,7 +37,7 @@ const createLostItem = async (
   return result;
 };
 
-// get all found item
+// get all lost item
 const getAllLostItems = async (
   filters: Record<string, unknown>,
   options: Record<string, unknown>,
@@ -106,9 +106,21 @@ const getAllLostItems = async (
   return { result, meta };
 };
 
+// get all my lost item
+const getAllMyLostItems = async (userId: string): Promise<LostItem[]> => {
+  const result = await prisma.lostItem.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  return result;
+};
+
 const LostItemServices = {
   createLostItem,
   getAllLostItems,
+  getAllMyLostItems,
 };
 
 export default LostItemServices;

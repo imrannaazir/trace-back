@@ -18,3 +18,18 @@ export type TLostItemProps = {
   category: TCategoryProps;
   user: TUserProps;
 };
+
+export type TFoundItemProps = {
+  id: string;
+  userId: string;
+  categoryId: string;
+  foundItemName: string;
+  description: string;
+  location: string;
+  photo: string;
+  phoneNumber: string;
+  foundDate: string;
+  emailAddress: string;
+  createdAt: string;
+  updatedAt: string;
+};

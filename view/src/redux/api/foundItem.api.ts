@@ -10,7 +10,16 @@ const foundItemApi = baseApi.injectEndpoints({
         data: data,
       }),
     }),
+
+    // get all my found item
+    getAllMyFoundItem: builder.query({
+      query: () => ({
+        url: "/found-items/my",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateFoundItemMutation } = foundItemApi;
+export const { useCreateFoundItemMutation, useGetAllMyFoundItemQuery } =
+  foundItemApi;

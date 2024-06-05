@@ -42,6 +42,17 @@ const getAllClaims = async (): Promise<Claim[]> => {
   return result;
 };
 
+// get my all claims
+const getMyAllClaims = async (userId: string): Promise<Claim[]> => {
+  const myClaims = await prisma.claim.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  return myClaims;
+};
+
 // update claim status
 const updateClaimStatus = async (
   payload: Claim,
@@ -68,6 +79,7 @@ const ClaimServices = {
   createClaim,
   getAllClaims,
   updateClaimStatus,
+  getMyAllClaims,
 };
 
 export default ClaimServices;

@@ -20,6 +20,9 @@ router.post(
 // get all claim : GET
 router.get("/", auth(), ClaimControllers.getAllClaims);
 
+//get all my claims : GET
+router.get("/my", auth(), ClaimControllers.getMyAllClaims);
+
 // update claim status : PATCH
 router.patch(
   "/:id",
