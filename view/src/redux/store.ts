@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { reducer } from "./rootReducer";
 import baseApi from "./api/baseApi";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { persistStore } from "redux-persist";
 
 export const store = configureStore({
   reducer: reducer,
@@ -10,6 +11,10 @@ export const store = configureStore({
       serializableCheck: false,
     }).concat(baseApi.middleware),
 });
+
+// Persistor to persist the store
+export const persistor = persistStore(store);
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

@@ -19,7 +19,13 @@ const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers }) => {
-    const accessToken = store.getState().auth.accessToken;
+    const authValue = localStorage.getItem("persist:auth");
+    let accessToken;
+    if (authValue) {
+      accessToken = JSON.parse(authValue).accessToken;
+      accessToken = accessToken.replace(/"/g, "");
+    }
+
     if (accessToken) {
       headers = {
         ...headers,
@@ -34,11 +40,11 @@ const axiosBaseQuery =
         params,
         headers,
       });
-
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       if (err?.response?.status === 401) {
+        console.log("logged out");
         store.dispatch(logOut());
       }
       return {
