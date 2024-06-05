@@ -11,46 +11,53 @@ import AppTExtArea from "@/components/form/AppTextArea";
 import UploadImage from "@/components/form/UploadImage";
 import AppDatePicker from "@/components/form/AppDatePicker";
 import AppSelector from "@/components/form/AppSelector";
+import { useGetCategoryListQuery } from "@/redux/api/category.api";
+import { TCategoryProps } from "@/types/category.types";
+import { toast } from "sonner";
+import { useCreateLostItemMutation } from "@/redux/api/lostItem.api";
 
 const AddLostItemPage = () => {
+  //  api hooks
+  const [createLostItem] = useCreateLostItemMutation();
+  const { data: categoriesData, isFetching } =
+    useGetCategoryListQuery(undefined);
+
   const handleAddLostItem = async (values: FieldValues) => {
-    console.log(values);
+    const toastId = toast.loading("Adding new lost item...");
+    try {
+      const response = await createLostItem(values).unwrap();
+      if (response?.success) {
+        toast.success("New lost item added successfully.", {
+          id: toastId,
+        });
+      }
+    } catch (error) {
+      toast.error(
+        error?.data?.errorDetails?.issues?.[0]?.message ||
+          error?.data?.errorDetails ||
+          "Something went wrong!",
+        { id: toastId }
+      );
+    }
   };
 
   const defaultValues = {
     categoryId: "",
-    itemName: "",
+    lostItemName: "",
     description: "",
     phoneNumber: "",
     emailAddress: "imrannaaziremon@gmail.com",
-    foundDate: "",
-    foundAddress: "",
+    lostDate: "",
+    location: "",
     photo: "",
     isFound: false,
   };
 
-  const categoryOptions = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ];
+  const categoryOptions =
+    categoriesData?.data?.map((category: TCategoryProps) => ({
+      label: category?.name,
+      value: category?.id,
+    })) || [];
   return (
     <DotBackgroundSection>
       <div className="max-w-screen-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  ">
@@ -71,20 +78,20 @@ const AddLostItemPage = () => {
                 options={categoryOptions}
               />
               <AppInput
-                name="itemName"
+                name="lostItemName"
                 type="text"
-                label="Item name"
+                label="Lost Item name"
                 placeholder="iPhone 15 pro max"
               />
             </div>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <AppInput
-                name="foundLocation"
+                name="location"
                 type="text"
-                label="Found Address"
+                label="Lost Address"
                 placeholder="Bankra, Jhikorgaca, Jessore."
               />
-              <AppDatePicker name="foundDate" label="Found Date" />
+              <AppDatePicker name="lostDate" label="Lost Date" />
             </div>
             <AppTExtArea
               className="h-[200px]"
@@ -109,12 +116,12 @@ const AddLostItemPage = () => {
               />
             </div>
             <UploadImage
-              fieldName="media"
+              fieldName="photo"
               setValue={() => {}}
               fieldValue={""}
             />
             <Divider />
-            <AppButton>Add found item &rarr;</AppButton>
+            <AppButton>Add lost item &rarr;</AppButton>
           </div>
         </AppForm>
       </div>

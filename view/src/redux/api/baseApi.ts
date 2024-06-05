@@ -3,7 +3,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { tagTypeList } from "./tabTypeList";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL as string;
-console.log({ baseUrl });
 
 const baseApi = createApi({
   reducerPath: "api",
@@ -11,5 +10,7 @@ const baseApi = createApi({
   endpoints: () => ({}),
   tagTypes: tagTypeList,
 });
+
+console.log({ baseApi });
 
 export default baseApi;

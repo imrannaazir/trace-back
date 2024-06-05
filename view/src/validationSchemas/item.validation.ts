@@ -12,12 +12,12 @@ export const addFoundItemValidationSchema = z.object({
 });
 export const addLostItemValidationSchema = z.object({
   categoryId: z.string().nonempty("Category is required."),
-  itemName: z.string().nonempty("Item name is required."),
+  lostItemName: z.string().nonempty("Item name is required."),
   description: z.string().optional(),
   phoneNumber: z.string().nonempty("Phone number is required"),
   emailAddress: z.string().email(),
-  foundLocation: z.string().nonempty("Location is required."),
-  foundDate: z.date(),
-  photo: z.unknown().optional(),
+  location: z.string().nonempty("Location is required."),
+  lostDate: z.date(),
+  photo: z.string().optional(),
   isFound: z.boolean(),
 });

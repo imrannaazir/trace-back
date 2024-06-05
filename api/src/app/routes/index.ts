@@ -5,6 +5,7 @@ import FoundItemCategoryRoutes from "../modules/foundItemCategories/foundItemCat
 import FoundItemRoutes from "../modules/foundItem/foundItem.routes";
 import ClaimRoutes from "../modules/claim/claim.routes";
 import UserProfileRoutes from "../modules/userProfile/userProfile.routes";
+import LostItemRoutes from "../modules/lostItem/lostItem.routes";
 
 const router = Router();
 
@@ -20,6 +21,10 @@ const routes: TModuleRoute[] = [
   {
     path: "/found-items",
     route: FoundItemRoutes,
+  },
+  {
+    path: "/lost-items",
+    route: LostItemRoutes,
   },
   {
     path: "/claims",

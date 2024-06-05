@@ -56,6 +56,7 @@ const LoginPage = () => {
     email: "imrannaaziremon007@gmail.com",
     password: "123456",
   };
+  console.log({ accessToken });
 
   if (accessToken) {
     router.back();
