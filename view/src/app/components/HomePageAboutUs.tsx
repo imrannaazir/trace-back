@@ -1,12 +1,16 @@
 "use client";
+import AppSectionHeading from "@/components/ui/AppSectionHeading";
 import { HoverEffect } from "@/components/ui/CardHoverEffect";
 import GridBackgroundSection from "@/components/ui/GridBackgroundSection";
 
 export function HomePageAboutUs() {
   return (
     <GridBackgroundSection>
-      <div className="max-w-5xl mx-auto px-8">
-        <HoverEffect items={purposeAndMission} />
+      <div>
+        <AppSectionHeading title="About us" />
+        <div className="max-w-5xl mx-auto px-8">
+          <HoverEffect items={purposeAndMission} />
+        </div>
       </div>
     </GridBackgroundSection>
   );

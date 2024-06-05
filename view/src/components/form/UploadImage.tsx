@@ -85,7 +85,7 @@ const UploadImage: FC<TUploadImageProps> = ({ className }) => {
           />
 
           {imageUrl ? (
-            <div className="h-[200px] mb-2 relative">
+            <div className={cn("h-[200px] mb-2 relative", className)}>
               <Image
                 className="w-full h-full object-contain object-left  overflow-hidden"
                 fill
@@ -107,6 +107,7 @@ const UploadImage: FC<TUploadImageProps> = ({ className }) => {
             <UploadingButton
               imageUrl={imageUrl}
               isImageUploading={isImageUploading}
+              className={className}
             />
           )}
         </div>
@@ -120,15 +121,18 @@ export default UploadImage;
 const UploadingButton = ({
   imageUrl,
   isImageUploading,
+  className,
 }: {
   imageUrl: string;
   isImageUploading: boolean;
+  className?: ClassValue;
 }) => {
   return (
     <label htmlFor="image" className="cursor-pointer">
       <div
         className={cn(
-          "mt-2 border-2 border-dashed h-[200px] rounded-md flex items-center justify-center"
+          "mt-2 border-2 border-dashed h-[200px] rounded-md flex items-center justify-center",
+          className
         )}
       >
         {isImageUploading ? (

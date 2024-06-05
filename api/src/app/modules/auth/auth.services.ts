@@ -22,28 +22,24 @@ const register = async (
       },
     });
 
-    if (profile) {
-      // create profile for user
-      const createdProfileData = await transactionClient.userProfile.create({
-        data: {
-          ...profile,
-          userId: newUser.id,
-        },
-        include: {
-          user: {
-            select: {
-              name: true,
-              email: true,
-              id: true,
-            },
+    // create profile for user
+    const createdProfileData = await transactionClient.userProfile.create({
+      data: {
+        ...profile,
+        userId: newUser.id,
+        name: user?.name as string,
+      },
+      include: {
+        user: {
+          select: {
+            email: true,
+            id: true,
           },
         },
-      });
+      },
+    });
 
-      return createdProfileData;
-    } else {
-      return "Registered successfully.";
-    }
+    return createdProfileData;
   });
 
   return result;
@@ -80,7 +76,7 @@ const login = async (payload: TLoginPayload): Promise<TLoginReturn> => {
 
   const result = {
     id: user.id,
-    name: user.name,
+    role: user.role,
     email: user.email,
     token: accessToken,
   };

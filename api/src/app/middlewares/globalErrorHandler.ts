@@ -13,6 +13,8 @@ import handleAppError from "../errors/handleAppError";
 import handleGeneralError from "../errors/handleGeneralError";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
+  console.log(error);
+
   let message = "Something went wrong!";
   let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
   let errorDetails: TErrorDetails = "Something went wrong.";

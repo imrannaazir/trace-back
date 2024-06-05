@@ -40,7 +40,7 @@ const LoginPage = () => {
             },
           })
         );
-        router.back();
+        router.push("/");
       }
     } catch (error) {
       toast.error(

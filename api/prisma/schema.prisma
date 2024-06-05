@@ -10,8 +10,9 @@ datasource db {
 
 model User{
   id String @id @default(uuid())
-  name String 
   email String @unique
+  name String ?
+  role Role @default(USER)
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,12 +24,23 @@ model User{
   @@map("users")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
+
+
 model UserProfile {
   id String @id @default(uuid())
   userId String @unique
   user   User?    @relation(fields: [userId], references: [id]) 
-  bio String
-  age Int
+  name String 
+  bio String?
+  age Int?
+  photo String?
+  address String?
+  phoneNumber String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -80,7 +92,10 @@ model LostItem{
   lostDate DateTime
   emailAddress String
   isFound Boolean @default(false)
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+@@map("lostItems")
 }
 
 model Claim{

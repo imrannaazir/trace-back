@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export type TUser = {
   id: string;
   email: string;
-  name: string;
+  role: string;
 };
 type TInitialState = {
   accessToken: string;

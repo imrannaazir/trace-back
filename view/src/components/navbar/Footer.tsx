@@ -3,6 +3,7 @@ import Container from "../ui/Container";
 import DotBackgroundSection from "../ui/DotBackgroundSection";
 import Link from "next/link";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import AppLogo from "../ui/AppLogo";
 
 const Footer = () => {
   const quickLinks = [
@@ -62,7 +63,9 @@ const Footer = () => {
         <div className="w-full flex justify-between ">
           {/* logo */}
           <div>
-            <h1 className="text-4xl">TraceBack</h1>
+            <div className="text-4xl">
+              <AppLogo />
+            </div>
             <p className="flex items-center gap-2 text-sm">
               <SlEnvolope /> contact@traceback.com
             </p>

@@ -17,8 +17,8 @@ const getMyProfile = async (myId: string): Promise<UserProfile | null> => {
       user: {
         select: {
           id: true,
-          name: true,
           email: true,
+          role: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -31,20 +31,33 @@ const getMyProfile = async (myId: string): Promise<UserProfile | null> => {
 
 // update my profile
 const updateMyProfile = async (
-  payload: UserProfile,
+  payload: Record<string, unknown>,
   myId: string,
 ): Promise<UserProfile> => {
+  const { email, ...restProfileData } = payload;
+
   await prisma.user.findUniqueOrThrow({
     where: {
       id: myId,
     },
   });
 
+  if (email) {
+    await prisma.user.update({
+      where: {
+        id: myId,
+      },
+      data: {
+        email: email,
+      },
+    });
+  }
+
   const result = await prisma.userProfile.update({
     where: {
       userId: myId,
     },
-    data: payload,
+    data: restProfileData,
     include: {
       user: {
         select: {

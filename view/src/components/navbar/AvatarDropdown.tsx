@@ -29,7 +29,7 @@ const AvatarDropdown = () => {
 
   const commandList = [
     {
-      title: "Profile",
+      title: "My Profile",
       icon: <BiUser className="mr-2 h-4 w-4" />,
       onClick: handleRedirectToProfile,
     },
@@ -46,14 +46,14 @@ const AvatarDropdown = () => {
         <Avatar className="cursor-pointer">
           <AvatarImage src="https://github.com/shadcna.png" alt="@shadcn" />
           <AvatarFallback className="uppercase">
-            {user?.name?.slice(0, 2)}
+            {user?.email?.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
       </PopoverTrigger>
       <PopoverContent className="bg-gray-50 dark:bg-zinc-900 dark:border-zinc-700 shadow-md">
         <div className="grid  gap-2">
           <div>
-            <h3>{user?.name}</h3>
+            <h3>{user?.email}</h3>
             <p className="text-xs">{user?.email}</p>
           </div>
           <Divider />

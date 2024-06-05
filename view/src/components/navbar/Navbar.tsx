@@ -1,3 +1,4 @@
+import AppLogo from "../ui/AppLogo";
 import Container from "../ui/Container";
 import Divider from "../ui/Divider";
 import { NavLinks } from "./NavLinks";
@@ -9,7 +10,7 @@ const Navbar = () => {
       <main className="  py-3 relative ">
         <Divider className="absolute bottom-0" />
         <Container className="flex justify-between items-center">
-          <p>TraceBack</p>
+          <AppLogo />
 
           <NavLinks />
           {/* end*/}

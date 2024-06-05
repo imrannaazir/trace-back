@@ -1,16 +1,34 @@
+import AppSectionHeading from "@/components/ui/AppSectionHeading";
 import Divider from "@/components/ui/Divider";
 import ItemCard from "@/components/ui/ItemCard";
+import { TLostItemProps } from "@/types";
 
-const RecentLostItems = () => {
+const getLostItems = async () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const response = await fetch(`${baseUrl}/lost-items?limit=6&page=1`, {
+    next: {
+      revalidate: 30,
+    },
+  });
+  return response.json();
+};
+
+const RecentLostItems = async () => {
+  const lostItemsData = await getLostItems();
+  const lostItems = lostItemsData?.data || [];
   return (
     <div className="space-y-4">
-      <div className="text-xl text-center font-semibold flex flex-col items-center gap-1">
-        <span>Recent Lost Item Reports</span>
-        <Divider className="max-w-[200px]" />
-      </div>
+      <AppSectionHeading title="Recent Lost Item Reports" />
       <div className="grid grid-cols-3 gap-4">
-        {Array.from({ length: 6 }).map((_item, i) => (
-          <ItemCard key={i} />
+        {lostItems?.map((item: TLostItemProps) => (
+          <ItemCard
+            key={item?.id}
+            date={item?.lostDate}
+            description={item.description}
+            photo={item?.photo}
+            title={item?.lostItemName}
+            type="lost"
+          />
         ))}
       </div>
     </div>
