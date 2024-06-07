@@ -44,7 +44,6 @@ const axiosBaseQuery =
     } catch (axiosError) {
       const err = axiosError as AxiosError;
       if (err?.response?.status === 401) {
-        console.log("logged out");
         store.dispatch(logOut());
       }
       return {

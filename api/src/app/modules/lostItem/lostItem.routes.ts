@@ -20,5 +20,7 @@ router.get("/", LostItemControllers.getAllLostItems);
 // get my all lost items : GET
 router.get("/my", auth(), LostItemControllers.getAllMyLostItems);
 
+// get single lost item : GET
+router.get("/:lostItemId", LostItemControllers.getSingleLostItem);
 const LostItemRoutes = router;
 export default LostItemRoutes;

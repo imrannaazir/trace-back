@@ -117,10 +117,33 @@ const getAllMyLostItems = async (userId: string): Promise<LostItem[]> => {
   return result;
 };
 
+// get singe lost item
+const getSingleLostItem = async (lostItemId: string): Promise<LostItem> => {
+  const result = await prisma.lostItem.findUniqueOrThrow({
+    where: {
+      id: lostItemId,
+    },
+    include: {
+      category: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          profile: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+  return result;
+};
 const LostItemServices = {
   createLostItem,
   getAllLostItems,
   getAllMyLostItems,
+  getSingleLostItem,
 };
 
 export default LostItemServices;

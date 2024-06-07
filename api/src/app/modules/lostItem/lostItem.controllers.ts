@@ -47,10 +47,22 @@ const getAllMyLostItems = catchAsync(async (req, res) => {
   });
 });
 
+// get single lost item
+const getSingleLostItem = catchAsync(async (req, res) => {
+  const lostItemId = req.params.lostItemId;
+  const result = await LostItemServices.getSingleLostItem(lostItemId);
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: `Lost item retrieved successfully.`,
+    data: result,
+  });
+});
 const LostItemControllers = {
   createLostItem,
   getAllLostItems,
   getAllMyLostItems,
+  getSingleLostItem,
 };
 
 export default LostItemControllers;

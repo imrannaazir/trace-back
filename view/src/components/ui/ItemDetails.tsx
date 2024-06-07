@@ -34,20 +34,6 @@ export default function ItemDetails({
   phoneNumber,
   userEmail,
 }: TItemDetailsProps) {
-  console.log({
-    category,
-    date,
-    description,
-    imageUrl,
-    userName,
-    userImageUrl,
-    email,
-    itemTitle,
-    location,
-    phoneNumber,
-    userEmail,
-  });
-
   return (
     <div>
       <div className="w-full flex gap-4">

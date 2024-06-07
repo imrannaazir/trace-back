@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { logIn, selectToken } from "@/redux/features/auth.slice";
 import { useAppDispatch } from "@/redux/hooks";
 import { useAppSelector } from "@/redux/store";
+import { Suspense } from "react";
 
 const LoginPage = () => {
   // hook
@@ -21,7 +22,7 @@ const LoginPage = () => {
   const accessToken = useAppSelector(selectToken);
 
   // api hooks
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const handleLogin = async (values: FieldValues) => {
     const toastId = toast.loading("Logging in...", { duration: 3000 });
     try {
@@ -42,7 +43,7 @@ const LoginPage = () => {
         );
         router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||
@@ -56,11 +57,14 @@ const LoginPage = () => {
     email: "imrannaaziremon007@gmail.com",
     password: "123456",
   };
-  console.log({ accessToken });
 
   if (accessToken) {
     router.back();
     return null;
+  }
+
+  if (isLoading) {
+    return <div>loading...</div>;
   }
   return (
     <DotBackgroundSection>
@@ -99,4 +103,10 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+const WrappedLoginPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <LoginPage />
+  </Suspense>
+);
+
+export default WrappedLoginPage;

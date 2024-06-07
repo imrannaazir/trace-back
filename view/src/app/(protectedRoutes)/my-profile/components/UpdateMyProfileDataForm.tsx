@@ -37,8 +37,6 @@ const UpdateMyProfileData: FC<TUpdateMyProfileDataProps> = ({
     photo: profile?.photo || "",
   };
 
-  console.log(myProfileDefaultValues);
-
   // handle profile update
   const handleUpdateProfile = async (values: FieldValues) => {
     const filteredValues = Object.fromEntries(
@@ -60,7 +58,7 @@ const UpdateMyProfileData: FC<TUpdateMyProfileDataProps> = ({
       } else if (response?.success) {
         toast.success("Profile updated successfully.", { id: toastId });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||

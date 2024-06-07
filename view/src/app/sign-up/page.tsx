@@ -17,7 +17,7 @@ const SignUpPage = () => {
   const router = useRouter();
   const accessToken = useAppSelector(selectToken);
   //  api hook
-  const [register] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
 
   const handleRegister = async (values: FieldValues) => {
     const payload = {
@@ -35,7 +35,7 @@ const SignUpPage = () => {
         });
         router.push("/log-in");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           "Something went wrong!",
@@ -47,6 +47,10 @@ const SignUpPage = () => {
   if (accessToken) {
     router.back();
     return null;
+  }
+
+  if (isLoading) {
+    return <div>loading...</div>;
   }
   return (
     <DotBackgroundSection>

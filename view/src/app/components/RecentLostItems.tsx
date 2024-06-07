@@ -1,5 +1,4 @@
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
-import Divider from "@/components/ui/Divider";
 import ItemCard from "@/components/ui/ItemCard";
 import { TLostItemProps } from "@/types";
 
@@ -22,6 +21,8 @@ const RecentLostItems = async () => {
       <div className="grid grid-cols-3 gap-4">
         {lostItems?.map((item: TLostItemProps) => (
           <ItemCard
+            id={item?.id}
+            redirectPath="/found-item"
             key={item?.id}
             date={item?.lostDate}
             description={item.description}

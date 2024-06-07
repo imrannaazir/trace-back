@@ -14,15 +14,17 @@ export default function MyAllLostItems() {
     return <p>Loading...</p>;
   }
 
-  const foundItems = lostItemsData?.data || [];
+  const lostItems = lostItemsData?.data || [];
 
   return (
     <div className="space-y-4">
       <AppSectionHeading title="My lost Item Reports" />
-      {foundItems?.length ? (
+      {lostItems?.length ? (
         <div className="grid grid-cols-3 gap-4">
-          {foundItems?.map((item: TLostItemProps) => (
+          {lostItems?.map((item: TLostItemProps) => (
             <ItemCard
+              id={item.id}
+              redirectPath="/my-profile/lost-item"
               key={item?.id}
               date={item?.lostDate}
               description={item.description}

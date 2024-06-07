@@ -10,13 +10,14 @@ import { changePasswordValidationSchema } from "@/validationSchemas/auth.validat
 import { useChangePasswordMutation } from "@/redux/api/auth.api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
 const ChangePasswordPage = () => {
   // hook
   const router = useRouter();
 
   // api hooks
-  const [changePassword] = useChangePasswordMutation();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
   const handleChangePassword = async (values: FieldValues) => {
     const toastId = toast.loading("Changing password...", { duration: 3000 });
     try {
@@ -28,7 +29,7 @@ const ChangePasswordPage = () => {
 
         router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||
@@ -37,6 +38,10 @@ const ChangePasswordPage = () => {
       );
     }
   };
+
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
 
   const changePasswordFormDefaultValues = {
     currentPassword: "",
@@ -86,4 +91,10 @@ const ChangePasswordPage = () => {
   );
 };
 
-export default ChangePasswordPage;
+const WrappedChangePasswordPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <ChangePasswordPage />
+  </Suspense>
+);
+
+export default WrappedChangePasswordPage;

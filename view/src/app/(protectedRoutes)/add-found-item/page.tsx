@@ -1,4 +1,5 @@
-"use client";
+/* "use client";
+import React, { Suspense } from "react";
 import DotBackgroundSection from "@/components/ui/DotBackgroundSection";
 import AppButton from "@/components/ui/AppButton";
 import { FieldValues } from "react-hook-form";
@@ -31,7 +32,7 @@ const AddFoundItem = () => {
           id: toastId,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||
@@ -57,6 +58,10 @@ const AddFoundItem = () => {
       label: category?.name,
       value: category?.id,
     })) || [];
+
+  if (isFetching) {
+    return <div>loading...</div>;
+  }
   return (
     <DotBackgroundSection>
       <div className="max-w-screen-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  ">
@@ -95,7 +100,6 @@ const AddFoundItem = () => {
             <AppTExtArea
               className="h-[200px]"
               name="description"
-              type="text"
               label="Description"
               placeholder="This phone has a scratch on the back side ..."
             />
@@ -128,4 +132,17 @@ const AddFoundItem = () => {
   );
 };
 
-export default AddFoundItem;
+const WrappedAddFoundItem = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <AddFoundItem />
+  </Suspense>
+);
+
+export default WrappedAddFoundItem;
+ */
+
+import React from "react";
+
+export default function page() {
+  return <div>page</div>;
+}

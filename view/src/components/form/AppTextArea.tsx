@@ -8,15 +8,13 @@ import { TextArea } from "./TextArea";
 type TInputProps = {
   name: string;
   label?: string;
-  type: string;
   placeholder?: string;
   className?: ClassValue;
 };
 
-const AppTExtArea: FC<TInputProps> = ({
+const AppTextArea: FC<TInputProps> = ({
   name,
   label,
-  type,
   className,
   placeholder,
   ...props
@@ -36,7 +34,6 @@ const AppTExtArea: FC<TInputProps> = ({
               id={name}
               className={`${className} `}
               placeholder={placeholder}
-              type={type}
               {...props}
             />
             {error && error.message && (
@@ -49,4 +46,4 @@ const AppTExtArea: FC<TInputProps> = ({
   );
 };
 
-export default AppTExtArea;
+export default AppTextArea;

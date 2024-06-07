@@ -1,4 +1,4 @@
-import baseApi from "./baseApi";
+import { baseApi } from "./baseApi";
 
 const lostItemApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,8 +18,19 @@ const lostItemApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    // get  single lost item
+    getSingleLostItem: builder.query({
+      query: (id) => ({
+        url: `/lost-items/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateLostItemMutation, useGetAllMyLostItemsQuery } =
-  lostItemApi;
+export const {
+  useCreateLostItemMutation,
+  useGetAllMyLostItemsQuery,
+  useGetSingleLostItemQuery,
+} = lostItemApi;

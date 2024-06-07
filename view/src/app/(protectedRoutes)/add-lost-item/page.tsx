@@ -15,6 +15,7 @@ import { useGetCategoryListQuery } from "@/redux/api/category.api";
 import { TCategoryProps } from "@/types/category.types";
 import { toast } from "sonner";
 import { useCreateLostItemMutation } from "@/redux/api/lostItem.api";
+import { Suspense } from "react";
 
 const AddLostItemPage = () => {
   //  api hooks
@@ -31,7 +32,7 @@ const AddLostItemPage = () => {
           id: toastId,
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(
         error?.data?.errorDetails?.issues?.[0]?.message ||
           error?.data?.errorDetails ||
@@ -58,6 +59,10 @@ const AddLostItemPage = () => {
       label: category?.name,
       value: category?.id,
     })) || [];
+
+  if (isFetching) {
+    return <div>loading...</div>;
+  }
   return (
     <DotBackgroundSection>
       <div className="max-w-screen-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input  ">
@@ -96,7 +101,6 @@ const AddLostItemPage = () => {
             <AppTExtArea
               className="h-[200px]"
               name="description"
-              type="text"
               label="Description"
               placeholder="This phone has a scratch on the back side ..."
             />
@@ -129,4 +133,10 @@ const AddLostItemPage = () => {
   );
 };
 
-export default AddLostItemPage;
+const WrappedAddLostItemPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <AddLostItemPage />
+  </Suspense>
+);
+
+export default WrappedAddLostItemPage;
