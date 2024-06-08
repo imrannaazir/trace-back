@@ -12,5 +12,5 @@ export type TClaimProps = {
   createdAt: string;
   updatedAt: string;
   foundItem: TFoundItemProps;
-  user?: TUserProps;
+  user: TUserProps;
 };
