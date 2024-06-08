@@ -32,6 +32,16 @@ const lostItemApi = baseApi.injectEndpoints({
         url: `/lost-items/${id}`,
         method: "GET",
       }),
+      providesTags: ["lostItem"],
+    }),
+    // update lost item
+    updateLostItem: builder.mutation({
+      query: ({ lostItemId, data }) => ({
+        url: `/lost-items/${lostItemId}`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["lostItem"],
     }),
   }),
 });
@@ -41,4 +51,5 @@ export const {
   useGetAllMyLostItemsQuery,
   useGetSingleLostItemQuery,
   useGetAllLostItemQuery,
+  useUpdateLostItemMutation,
 } = lostItemApi;

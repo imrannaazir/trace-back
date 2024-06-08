@@ -26,6 +26,13 @@ router.get("/single/:claimId", auth(), ClaimControllers.getSingleClaim);
 //get all my claims : GET
 router.get("/my", auth(), ClaimControllers.getMyAllClaims);
 
+//get all  claims of items  : GET
+router.get(
+  "/of-item/:foundItemId",
+  auth(),
+  ClaimControllers.getAllClaimsOfItem,
+);
+
 // update claim status : PATCH
 router.patch(
   "/:id",

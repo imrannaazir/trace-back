@@ -139,11 +139,33 @@ const getSingleLostItem = async (lostItemId: string): Promise<LostItem> => {
   });
   return result;
 };
+
+// update single lost item
+const updateSingleLostItem = async (
+  payload: Record<string, unknown>,
+  lostItemId: string,
+  userId: string,
+): Promise<LostItem> => {
+  // check is lost item exists
+  await prisma.lostItem.findUniqueOrThrow({
+    where: {
+      id: lostItemId,
+      userId,
+    },
+  });
+
+  const result = await prisma.lostItem.update({
+    where: { id: lostItemId },
+    data: payload,
+  });
+  return result;
+};
 const LostItemServices = {
   createLostItem,
   getAllLostItems,
   getAllMyLostItems,
   getSingleLostItem,
+  updateSingleLostItem,
 };
 
 export default LostItemServices;

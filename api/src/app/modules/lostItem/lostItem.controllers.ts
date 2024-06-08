@@ -58,11 +58,32 @@ const getSingleLostItem = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+// update lost item
+const updateLostItem = catchAsync(async (req, res) => {
+  const userId = req.params.userId;
+  const payload = req.body;
+  const lostItemId = req.params.lostItemId;
+  const result = await LostItemServices.updateSingleLostItem(
+    payload,
+    lostItemId,
+    userId,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Lost item updated successfully.",
+    data: result,
+  });
+});
+
 const LostItemControllers = {
   createLostItem,
   getAllLostItems,
   getAllMyLostItems,
   getSingleLostItem,
+  updateLostItem,
 };
 
 export default LostItemControllers;

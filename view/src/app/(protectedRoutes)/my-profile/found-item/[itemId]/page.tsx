@@ -1,9 +1,11 @@
 "use client";
 
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
+import Divider from "@/components/ui/Divider";
 import ItemDetails from "@/components/ui/ItemDetails";
 import { useGetSingleFoundItemQuery } from "@/redux/api/foundItem.api";
 import { TFoundItemProps } from "@/types";
+import AllClaimRequestsOfFoundItem from "./components/AllClaimRequestsOfFoundItem";
 
 const FoundItemDetailsPage = ({ params }: { params: { itemId: string } }) => {
   const { data: foundItemData, isFetching } = useGetSingleFoundItemQuery(
@@ -34,6 +36,8 @@ const FoundItemDetailsPage = ({ params }: { params: { itemId: string } }) => {
         userImageUrl={foundItem?.user?.profile?.photo as string}
         userName={foundItem?.user?.profile?.name as string}
       />
+      <Divider />
+      <AllClaimRequestsOfFoundItem foundItemId={foundItem?.id} />
     </div>
   );
 };
