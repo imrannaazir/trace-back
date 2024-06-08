@@ -1,7 +1,6 @@
 "use client";
 
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
-import ItemCard from "@/components/ui/ItemCard";
 import { useGetMyClaimListQuery } from "@/redux/api/claim.api";
 
 export default function MyAllClaimRequest() {

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Tabs } from "../ui/Tab";
 
 export function NavLinks() {
@@ -22,8 +21,8 @@ export function NavLinks() {
       path: "/contact-us",
     },
     {
-      title: "Found Items",
-      path: "/found-items",
+      title: "Recent Posts",
+      path: "/recent-posts",
     },
   ];
 

@@ -2,13 +2,15 @@
 
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
 import ItemCard from "@/components/ui/ItemCard";
-import { useGetAllMyLostItemsQuery } from "@/redux/api/lostItem.api";
+import {
+  useGetAllLostItemQuery,
+  useGetAllMyLostItemsQuery,
+} from "@/redux/api/lostItem.api";
 import { TLostItemProps } from "@/types";
 
-export default function MyAllLostItems() {
+export default function RecentLostItems() {
   // hooks
-  const { data: lostItemsData, isFetching } =
-    useGetAllMyLostItemsQuery(undefined);
+  const { data: lostItemsData, isFetching } = useGetAllLostItemQuery("");
   if (isFetching) {
     return <p>Loading...</p>;
   }
@@ -17,13 +19,13 @@ export default function MyAllLostItems() {
 
   return (
     <div className="space-y-4">
-      <AppSectionHeading title="My lost Item Reports" />
+      <AppSectionHeading title="Recent Lost Item Reports" />
       {lostItems?.length ? (
         <div className="grid grid-cols-3 gap-4">
           {lostItems?.map((item: TLostItemProps) => (
             <ItemCard
               id={item.id}
-              redirectPath="/my-profile/lost-item"
+              redirectPath="/lost-item"
               key={item?.id}
               date={item?.lostDate}
               description={item.description}

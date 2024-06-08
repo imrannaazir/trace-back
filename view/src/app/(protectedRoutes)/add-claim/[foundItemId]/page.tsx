@@ -1,9 +1,16 @@
-const AddClaimRequest = () => {
+import { Suspense } from "react";
+import AddClaimForm from "./components/AddClaimForm";
+
+const AddClaimRequestPage = ({
+  params,
+}: {
+  params: { foundItemId: string };
+}) => {
   return (
-    <div>
-      <h1>AddClaimRequest</h1>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <AddClaimForm foundItemId={params?.foundItemId} />
+    </Suspense>
   );
 };
 
-export default AddClaimRequest;
+export default AddClaimRequestPage;

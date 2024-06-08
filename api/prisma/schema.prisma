@@ -106,6 +106,7 @@ model Claim{
   foundItem FoundItem @relation(fields: [foundItemId],references: [id])
   status Status @default(PENDING)
   distinguishingFeatures String
+  photo String?
   lostDate DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

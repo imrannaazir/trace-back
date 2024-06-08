@@ -6,6 +6,7 @@ export const createClaimValidationSchema = z.object({
     foundItemId: z.string(),
     distinguishingFeatures: z.string(),
     lostDate: z.string(),
+    photo: z.string().optional(),
   }),
 });
 

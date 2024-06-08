@@ -2,13 +2,12 @@
 
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
 import ItemCard from "@/components/ui/ItemCard";
-import { useGetAllMyFoundItemQuery } from "@/redux/api/foundItem.api";
+import { useGetAllFoundItemQuery } from "@/redux/api/foundItem.api";
 import { TFoundItemProps } from "@/types";
 
-export default function MyAllFoundItems() {
+export default function RecentFoundItems() {
   // hooks
-  const { data: foundItemsData, isFetching } =
-    useGetAllMyFoundItemQuery(undefined);
+  const { data: foundItemsData, isFetching } = useGetAllFoundItemQuery("");
   if (isFetching) {
     return <p>Loading...</p>;
   }
@@ -17,7 +16,7 @@ export default function MyAllFoundItems() {
 
   return (
     <div className="space-y-4">
-      <AppSectionHeading title="My found Item Reports" />
+      <AppSectionHeading title="Recent Found Item Reports" />
       {foundItems?.length ? (
         <div className="grid grid-cols-3 gap-4">
           {foundItems?.map((item: TFoundItemProps) => (
@@ -28,7 +27,7 @@ export default function MyAllFoundItems() {
               photo={item?.photo}
               title={item?.foundItemName}
               type="found"
-              redirectPath="/my-profile/found-item/"
+              redirectPath="/found-item/"
               id={item?.id}
               location={item?.location}
             />

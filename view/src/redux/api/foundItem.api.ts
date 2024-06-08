@@ -11,6 +11,14 @@ const foundItemApi = baseApi.injectEndpoints({
       }),
     }),
 
+    //get all found items
+    getAllFoundItem: builder.query({
+      query: (params) => ({
+        url: `/found-items?${params}`,
+        method: "GET",
+      }),
+    }),
+
     // get all my found item
     getAllMyFoundItem: builder.query({
       query: () => ({
@@ -33,4 +41,5 @@ export const {
   useCreateFoundItemMutation,
   useGetAllMyFoundItemQuery,
   useGetSingleFoundItemQuery,
+  useGetAllFoundItemQuery,
 } = foundItemApi;

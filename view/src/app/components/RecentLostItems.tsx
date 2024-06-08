@@ -21,13 +21,14 @@ const RecentLostItems = () => {
         {lostItems?.map((item: TLostItemProps) => (
           <ItemCard
             id={item?.id}
-            redirectPath="/found-item"
+            redirectPath="/lost-item"
             key={item?.id}
             date={item?.lostDate}
             description={item.description}
             photo={item?.photo}
             title={item?.lostItemName}
             type="lost"
+            location={item?.location}
           />
         ))}
       </div>

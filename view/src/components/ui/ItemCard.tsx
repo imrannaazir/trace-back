@@ -5,6 +5,7 @@ import { FC } from "react";
 import { BiImage } from "react-icons/bi";
 import { FaClock } from "react-icons/fa";
 import Link from "next/link";
+import { LuMapPin } from "react-icons/lu";
 type TItemCardProps = {
   photo: string;
   description: string;
@@ -13,6 +14,7 @@ type TItemCardProps = {
   date: string;
   redirectPath: string;
   id: string;
+  location: string;
 };
 const ItemCard: FC<TItemCardProps> = ({
   photo,
@@ -22,6 +24,7 @@ const ItemCard: FC<TItemCardProps> = ({
   date,
   redirectPath,
   id,
+  location,
 }) => {
   return (
     <div className=" dark:bg-black bg-white max-w-96  rounded-3xl p-4 shadow-xl border border-neutral-200 dark:border-white/[0.1]  hover:shadow-black/[0.1] hover:dark:shadow-white/[0.05] flex flex-col justify-between">
@@ -51,11 +54,17 @@ const ItemCard: FC<TItemCardProps> = ({
         </div>
         {/* buttons */}
 
-        <div className="flex items-center justify-between">
-          <p className="flex items-center gap-2">
-            <FaClock />
-            {type} at: <span>10:22 pm</span>
-          </p>
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="flex items-center gap-2 capitalize">
+              <FaClock />
+              {type} at: <span>10:22 pm</span>
+            </p>
+            <p className="flex items-center gap-2 capitalize">
+              <LuMapPin />
+              {type} in: <span className="text-sm">{location}</span>
+            </p>
+          </div>
           <Link href={`${redirectPath}/${id}`}>
             <AppButton className="max-w-[100px]">View</AppButton>
           </Link>
