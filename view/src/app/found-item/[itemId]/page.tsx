@@ -1,9 +1,11 @@
 "use client";
 
+import AppButton from "@/components/ui/AppButton";
 import AppSectionHeading from "@/components/ui/AppSectionHeading";
 import ItemDetails from "@/components/ui/ItemDetails";
 import { useGetSingleFoundItemQuery } from "@/redux/api/foundItem.api";
 import { TFoundItemProps } from "@/types";
+import Link from "next/link";
 
 const FoundItemDetailsPage = ({ params }: { params: { itemId: string } }) => {
   const { data: foundItemData, isFetching } = useGetSingleFoundItemQuery(
@@ -34,6 +36,13 @@ const FoundItemDetailsPage = ({ params }: { params: { itemId: string } }) => {
         userImageUrl={foundItem?.user?.profile?.photo as string}
         userName={foundItem?.user?.profile?.name as string}
       />
+
+      {/* buttons */}
+      <div className="flex justify-end">
+        <Link href={`/add-claim/${foundItem?.id}`}>
+          <AppButton className="max-w-[200px]">Claim Ownership</AppButton>
+        </Link>
+      </div>
     </div>
   );
 };

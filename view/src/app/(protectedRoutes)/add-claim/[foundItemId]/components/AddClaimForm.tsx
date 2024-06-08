@@ -12,19 +12,24 @@ import AppDatePicker from "@/components/form/AppDatePicker";
 import { toast } from "sonner";
 import { useCreateLostItemMutation } from "@/redux/api/lostItem.api";
 import { useGetSingleFoundItemQuery } from "@/redux/api/foundItem.api";
+import { useRequestOwnerShipClaimMutation } from "@/redux/api/claim.api";
+import { requestOwnerShipClaimValidationSchema } from "@/validationSchemas/claim.validation";
 
 const AddClaimForm = ({ foundItemId }: { foundItemId: string }) => {
   //  api hooks
   const { data: foundItemData, isFetching } =
     useGetSingleFoundItemQuery(foundItemId);
-  const [createLostItem] = useCreateLostItemMutation();
+  const [requestClaim] = useRequestOwnerShipClaimMutation();
 
-  const handleAddLostItem = async (values: FieldValues) => {
-    const toastId = toast.loading("Adding new lost item...");
+  const handleRequestClaim = async (values: FieldValues) => {
+    const toastId = toast.loading("Requesting ownership claim...");
     try {
-      const response = await createLostItem(values).unwrap();
+      const response = await requestClaim({
+        foundItemId: foundItemData?.data?.id,
+        ...values,
+      }).unwrap();
       if (response?.success) {
-        toast.success("New lost item added successfully.", {
+        toast.success("Claim request sent successfully.", {
           id: toastId,
         });
       }
@@ -39,15 +44,9 @@ const AddClaimForm = ({ foundItemId }: { foundItemId: string }) => {
   };
 
   const defaultValues = {
-    categoryId: "",
-    lostItemName: "",
-    description: "",
-    phoneNumber: "",
-    emailAddress: "imrannaaziremon@gmail.com",
+    distinguishingFeatures: "",
     lostDate: "",
-    location: "",
     photo: "",
-    isFound: false,
   };
 
   if (isFetching) {
@@ -61,15 +60,15 @@ const AddClaimForm = ({ foundItemId }: { foundItemId: string }) => {
         </h2>
 
         <AppForm
-          resolver={zodResolver(addLostItemValidationSchema)}
+          resolver={zodResolver(requestOwnerShipClaimValidationSchema)}
           defaultValues={defaultValues}
-          onSubmit={handleAddLostItem}
+          onSubmit={handleRequestClaim}
         >
           <div className="space-y-2 mt-4">
             <AppDatePicker name="lostDate" label="Lost Date" />
             <AppTExtArea
               className="h-[200px]"
-              name="description"
+              name="distinguishingFeatures"
               label="Description"
               placeholder="Enter distinguishing features..."
             />
@@ -80,7 +79,7 @@ const AddClaimForm = ({ foundItemId }: { foundItemId: string }) => {
               fieldValue={""}
             />
             <Divider />
-            <AppButton>Add lost item &rarr;</AppButton>
+            <AppButton>Request claim &rarr;</AppButton>
           </div>
         </AppForm>
       </div>

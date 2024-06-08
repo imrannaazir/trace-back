@@ -20,6 +20,9 @@ router.post(
 // get all claim : GET
 router.get("/", auth(), ClaimControllers.getAllClaims);
 
+// get single claim : GET
+router.get("/single/:claimId", auth(), ClaimControllers.getSingleClaim);
+
 //get all my claims : GET
 router.get("/my", auth(), ClaimControllers.getMyAllClaims);
 

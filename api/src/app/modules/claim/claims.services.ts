@@ -42,11 +42,50 @@ const getAllClaims = async (): Promise<Claim[]> => {
   return result;
 };
 
+// get single claim
+const getSingleClaim = async (claimId: string): Promise<Claim> => {
+  const result = await prisma.claim.findUniqueOrThrow({
+    where: {
+      id: claimId,
+    },
+    include: {
+      foundItem: {
+        include: {
+          category: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
 // get my all claims
 const getMyAllClaims = async (userId: string): Promise<Claim[]> => {
   const myClaims = await prisma.claim.findMany({
     where: {
       userId,
+    },
+    include: {
+      foundItem: true,
     },
   });
 
@@ -80,6 +119,7 @@ const ClaimServices = {
   getAllClaims,
   updateClaimStatus,
   getMyAllClaims,
+  getSingleClaim,
 };
 
 export default ClaimServices;
