@@ -8,11 +8,13 @@ export type TUser = {
 type TInitialState = {
   accessToken: string;
   user: TUser | null;
+  role: "USER" | "ADMIN";
 };
 
 const initialState: TInitialState = {
   accessToken: "",
   user: null,
+  role: "USER",
 };
 
 const authSlice = createSlice({

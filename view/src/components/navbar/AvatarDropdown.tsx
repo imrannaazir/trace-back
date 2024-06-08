@@ -6,7 +6,7 @@ import { logOut, selectUser } from "@/redux/features/auth.slice";
 import Divider from "../ui/Divider";
 import { Command, CommandGroup, CommandItem, CommandList } from "../ui/Command";
 import { BiUser } from "react-icons/bi";
-import { LuKey, LuLogOut } from "react-icons/lu";
+import { LuKey, LuLayoutDashboard, LuLogOut } from "react-icons/lu";
 import { useAppDispatch } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -48,6 +48,14 @@ const AvatarDropdown = () => {
       onClick: handleLogout,
     },
   ];
+
+  if (user?.role === "ADMIN") {
+    commandList.splice(1, 0, {
+      title: "Dashboard",
+      icon: <LuLayoutDashboard className="mr-2 h-4 w-4" />,
+      onClick: handleRedirectToChangePassword,
+    });
+  }
 
   return (
     <Popover>
